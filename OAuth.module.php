@@ -517,6 +517,31 @@ class OAuth extends CMSModule
         \Events::SendEvent($this->GetName(), $eventName, $params);
     }
 
+    // MAMS Integration
+
+    /**
+     * Return the MAMS auth consumer object for this module.
+     * Called by MAMS when OAuth is configured as the auth_module.
+     *
+     * @return oauth_mams_consumer
+     */
+    public function GetMAMSAuthConsumer()
+    {
+        require_once __DIR__ . '/lib/class.oauth_mams_consumer.php';
+        return new oauth_mams_consumer();
+    }
+
+    /**
+     * Check if MAMS module is installed and available.
+     *
+     * @return bool
+     */
+    public function IsMAMSAvailable()
+    {
+        $mams = \cms_utils::get_module('MAMS');
+        return is_object($mams);
+    }
+
     // Utility
 
     public function IsLoggedIn()

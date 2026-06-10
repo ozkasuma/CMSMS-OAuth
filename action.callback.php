@@ -111,8 +111,67 @@ try {
         ]);
     }
     
+    // Bridge to MAMS if available
+    if ($this->IsMAMSAvailable()) {
+        $mams = \cms_utils::get_module('MAMS');
+        $manip = $mams->GetManipulator();
+        $email = $userInfo['email'] ?? null;
+
+        if ($email) {
+            // Check if MAMS user exists with this email as username
+            $mamsUid = $manip->GetUserID($email);
+
+            if ($mamsUid < 1) {
+                // Create MAMS user
+                $expires = strtotime('+120 months');
+                $randomPass = bin2hex(random_bytes(16));
+                $result = $manip->AddUser($email, $randomPass, $expires, true, true);
+
+                if ($result[0]) {
+                    $mamsUid = $result[1];
+
+                    // Set default groups
+                    $dfltGroups = $manip->GetDfltGroups();
+                    if (is_array($dfltGroups) && count($dfltGroups)) {
+                        $manip->SetUserGroups($mamsUid, $dfltGroups);
+                    }
+
+                    // Store OAuth profile data as MAMS properties
+                    $name = $userInfo['name'] ?? $userInfo['login'] ?? '';
+                    if ($name) {
+                        $manip->SetUserPropertyFull('oauth_name', $name, $mamsUid);
+                    }
+                    $manip->SetUserPropertyFull('oauth_email', $email, $mamsUid);
+                    $avatar = $userInfo['avatar_url'] ?? $userInfo['picture'] ?? '';
+                    if ($avatar) {
+                        $manip->SetUserPropertyFull('oauth_avatar', $avatar, $mamsUid);
+                    }
+                    $manip->SetUserPropertyFull('oauth_provider', $provider, $mamsUid);
+                }
+            } else {
+                // Update existing MAMS user properties
+                $name = $userInfo['name'] ?? $userInfo['login'] ?? '';
+                if ($name) {
+                    $manip->SetUserPropertyFull('oauth_name', $name, $mamsUid);
+                }
+                $avatar = $userInfo['avatar_url'] ?? $userInfo['picture'] ?? '';
+                if ($avatar) {
+                    $manip->SetUserPropertyFull('oauth_avatar', $avatar, $mamsUid);
+                }
+            }
+
+            // Store MAMS user ID in OAuth users table
+            $db = $this->GetDb();
+            $prefix = CMS_DB_PREFIX;
+            $db->Execute(
+                "UPDATE {$prefix}module_oauth_users SET mams_user_id = ? WHERE user_id = ?",
+                [$mamsUid, $userId]
+            );
+        }
+    }
+
     audit('', $this->GetName(), 'User logged in via ' . $provider . ': ' . ($userInfo['email'] ?? $userInfo['id']));
-    
+
     // Set success message
     $_SESSION['oauth_success'] = $this->Lang('login_success', $providerObj->getDisplayName());
     

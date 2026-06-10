@@ -17,9 +17,19 @@ if (!$returnUrl) {
 $user = $this->GetCurrentUser();
 
 if ($user) {
+    // Also logout from MAMS if available
+    if ($this->IsMAMSAvailable()) {
+        $mams = \cms_utils::get_module('MAMS');
+        $manip = $mams->GetManipulator();
+        $loggedInId = $manip->LoggedInId();
+        if ($loggedInId) {
+            $manip->LogoutUser($loggedInId);
+        }
+    }
+
     // Clear the session
     $this->ClearSession();
-    
+
     // Fire logout event
     $this->SendOAuthEvent('OAuthUserLogout', [
         'user' => $user,

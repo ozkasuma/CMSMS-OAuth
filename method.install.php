@@ -17,6 +17,7 @@ $tables = [
         avatar_url VARCHAR(500),
         created_at DATETIME,
         last_login DATETIME,
+        mams_user_id INT DEFAULT NULL,
         KEY idx_email (email)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
     
@@ -49,6 +50,12 @@ $tables = [
 // Execute table creation
 foreach ($tables as $sql) {
     $db->Execute($sql);
+}
+
+// Upgrade: add mams_user_id column if not exists (for upgrades from pre-MAMS versions)
+$columns = $db->MetaColumnNames($prefix . 'module_oauth_users');
+if (is_array($columns) && !in_array('mams_user_id', array_map('strtolower', $columns))) {
+    $db->Execute("ALTER TABLE {$prefix}module_oauth_users ADD COLUMN mams_user_id INT DEFAULT NULL");
 }
 
 // Create permissions
