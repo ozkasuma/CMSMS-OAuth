@@ -13,6 +13,7 @@ Add GitHub, Google, Facebook, and Twitter login to your CMS Made Simple site wit
 - 👥 **User Management** — Admin panel with search, pagination, delete
 - 🛡️ **Secure** — CSRF protection, password hashing, HTTPS support
 - 🧩 **Developer API** — Easy integration with other modules
+- 🔄 **MAMS Compatible** — Works as a MAMS consumer for seamless integration with MAMS-aware modules
 
 ## Installation
 
@@ -108,6 +109,9 @@ make lint     # Check PHP syntax
 
 {* Email + password login *}
 {OAuth action="password_login"}
+
+{* Show current user info (name/avatar/login link) *}
+{OAuth action="nav_user"}
 ```
 
 ### PHP API
@@ -146,6 +150,18 @@ The module fires these events that other modules can listen to:
 - `OAuthUserLogout` — User logged out
 - `OAuthUserCreated` — New user registered
 - `OAuthProviderLinked` — Provider linked to account
+
+## MAMS Compatibility
+
+OAuth implements the **MAMS (Member Auth Management System)** consumer interface, making it compatible with any CMSMS module that uses MAMS for user authentication (e.g., FrontEndUsers, CGMemberAuth).
+
+When a MAMS manipulator module is installed, OAuth automatically:
+- Registers as a MAMS consumer via `mams_pure_consumer`
+- Reports its capabilities (login, logout, session management)
+- Responds to MAMS discovery calls from other modules
+- Integrates with the MAMS login/logout lifecycle
+
+No configuration needed — if MAMS is available, OAuth uses it.
 
 ## Database Tables
 
