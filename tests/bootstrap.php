@@ -16,6 +16,7 @@ $GLOBALS['gCms'] = new stdClass();
 require_once __DIR__ . '/Mocks/CMSModule.php';
 require_once __DIR__ . '/Mocks/CmsApp.php';
 require_once __DIR__ . '/Mocks/Database.php';
+require_once __DIR__ . '/Mocks/MAMS.php';
 
 // Parameter cleaning constants
 if (!defined('CLEAN_STRING')) define('CLEAN_STRING', 1);
