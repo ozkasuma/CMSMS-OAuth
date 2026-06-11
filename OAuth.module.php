@@ -22,7 +22,7 @@ class OAuth extends CMSModule
     public function GetFriendlyName() { return $this->Lang('friendlyname'); }
     public function IsPluginModule() { return true; }
     public function HasAdmin() { return true; }
-    public function GetVersion() { return '1.1.0'; }
+    public function GetVersion() { return '1.1.1'; }
     public function MinimumCMSVersion() { return '2.2.0'; }
     public function GetAdminDescription() { return $this->Lang('admindescription'); }
     public function GetAdminSection() { return 'usersgroups'; }
