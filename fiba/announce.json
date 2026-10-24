@@ -1,0 +1,48 @@
+{
+  "type": "fiba_announce",
+  "league": "fiba",
+  "competitionId": 209074,
+  "gameId": 132008,
+  "date": "20260819",
+  "cover": {
+    "tournamentType": "PROCHAIN MATCH FRANCE",
+    "competition": "FIBA U16 Women's EuroBasket",
+    "round": "Quart de finale",
+    "date": "19.08.26",
+    "teamVsTeam": "FRANCE - ALLEMAGNE",
+    "diffusion": "Courtside 1891"
+  },
+  "match": {
+    "teamFrance": "FRANCE",
+    "opponent": "ALLEMAGNE",
+    "opponentCode": "GER",
+    "matchup": "France vs Allemagne",
+    "round": "Quart de finale",
+    "jour": "mercredi",
+    "dateParis": "19/08/2026",
+    "tipoffParis": "14h30",
+    "timeLabel": "14h30 (CEST)",
+    "dateLabel": "19.08.26",
+    "venue": "Pitesti Arena, Pitesti",
+    "tournamentType": "FIBA U16 Women's EuroBasket",
+    "diffusion": "Courtside 1891"
+  },
+  "matches": [
+    {
+      "teamFrance": "FRANCE",
+      "opponent": "ALLEMAGNE",
+      "opponentCode": "GER",
+      "matchup": "France vs Allemagne",
+      "round": "Quart de finale",
+      "jour": "mercredi",
+      "dateParis": "19/08/2026",
+      "tipoffParis": "14h30",
+      "timeLabel": "14h30 (CEST)",
+      "dateLabel": "19.08.26",
+      "venue": "Pitesti Arena, Pitesti",
+      "tournamentType": "FIBA U16 Women's EuroBasket",
+      "diffusion": "Courtside 1891"
+    }
+  ],
+  "caption": "🏀 FIBA U16 Women's EuroBasket : place aux quart de finale pour les Bleuettes\n\n🔵 France vs Allemagne à 14h30 (CEST), Pitesti Arena, Pitesti : mercredi 19 août, les Bleuettes défient l'Allemagne pour une place au tour suivant.\n\nTu la sens comment cette affiche ? 💬👇\n\n👉 Place-toi @courtside.fr sur l'actu basket et abonne-toi 🏀\n\n#FIBA #Courtside #Basketball #EquipeDeFrance #Allemagne"
+}
